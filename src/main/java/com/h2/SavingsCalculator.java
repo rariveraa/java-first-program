@@ -4,58 +4,40 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 
 public class SavingsCalculator {
+    private float[] credits;
+    private float[] debits;
 
-
-    private final float[] debit;
-    private final float[] credits;
-
-
-    public SavingsCalculator(float[] debit, float[] credits) {
-        this.debit = debit;
+    public SavingsCalculator(float[] credits, float[] debits) {
         this.credits = credits;
+        this.debits = debits;
     }
 
-    private float sumOFCredits() {
-
-        float sum = 0.f;
-
-        for (int i = 0; i < this.credits.length; i++) {
-
-            sum += this.credits[i];
+    private float sumOfCredits() {
+        float sum = 0.0f;
+        for(float credit: credits) {
+            sum += credit;
         }
-
         return sum;
     }
 
-    private float sumOFDebits() {
-
-        float sum = 0.f;
-
-        for (int i = 0; i < this.debit.length; i++) {
-
-            sum += this.debit[i];
+    private float sumOfDebits() {
+        float sum = 0.0f;
+        for(float debit: debits) {
+            sum += debit;
         }
-
-//        for (Float x: credits
-//             ) {
-//            System.out.println(x);
-//        }
-
         return sum;
     }
 
     private static int remainingDaysInMonth(LocalDate date) {
-
-        YearMonth yearMonth =  YearMonth.of(date.getYear(),date.getMonth());
+        YearMonth yearMonth = YearMonth.of(date.getYear(), date.getMonth());
         int totalDaysInMonth = yearMonth.lengthOfMonth();
-        int remainingDays =  date.getDayOfMonth() - totalDaysInMonth;
+        int remainingDays = totalDaysInMonth - date.getDayOfMonth();
         return remainingDays;
     }
 
     public float calculate() {
-        return sumOFCredits() - sumOFDebits();
+        return sumOfCredits() - sumOfDebits();
     }
-
 
     public static void main(String[] args) {
         final String[] creditsAsString = args[0].split(",");
@@ -77,4 +59,3 @@ public class SavingsCalculator {
         System.out.println("Net Savings = " + netSavings + ", remaining days in month = " + remainingDaysInMonth(LocalDate.now()));
     }
 }
-
